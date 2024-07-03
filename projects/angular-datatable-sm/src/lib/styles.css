@@ -1,0 +1,264 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Global styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* Links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Container styles */
+.container {
+    width: 100%;
+    max-width: 1200px; /* Adjust max-width as needed */
+    margin: 0 auto;
+    padding: 0px 0px 50px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+
+/* Header styles */
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-bottom: 20px;
+}
+
+/* Main content area */
+.main-content {
+    padding: 20px;
+}
+
+/* Footer styles */
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+/* Responsive media queries */
+@media only screen and (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    header, footer {
+        padding: 5px 10px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .container {
+        padding: 5px;
+    }
+    .main-content {
+        padding: 10px;
+    }
+}
+
+/* Example additional element styles */
+/* Buttons */
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.input-group input[type="text"],
+.input-group input[type="email"],
+.input-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.input-group textarea {
+    height: 150px;
+}
+
+/* Responsive adjustments for forms */
+@media only screen and (max-width: 768px) {
+    .input-group {
+        margin-bottom: 10px;
+    }
+    .input-group input[type="text"],
+    .input-group input[type="email"],
+    .input-group textarea {
+        padding: 8px;
+        font-size: 14px;
+    }
+    .input-group textarea {
+        height: 120px;
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .input-group {
+        margin-bottom: 5px;
+    }
+    .input-group input[type="text"],
+    .input-group input[type="email"],
+    .input-group textarea {
+        padding: 6px;
+        font-size: 12px;
+    }
+    .input-group textarea {
+        height: 100px;
+    }
+}
+
+/* Table container styling */
+.table-container {
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+  
+  /* Table styling */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    background-color: #fff;
+    border-radius: 5px;
+  }
+  
+  /* Table header styling */
+  .table th, .table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table th {
+    background-color: #0075ff21;
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  /* Table body row styling */
+  /* .table td {
+    background-color: #fafafa;
+    color: #555;
+  }
+   */
+  /* Darken row on hover */
+  .table tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.05); /* Darken with 5% opacity */
+    cursor: pointer;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    
+    .table thead, .table tbody, .table tr, .table th, .table td {
+      display: block;
+    }
+    
+    .table thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+    
+    .table tr {
+      margin-bottom: 15px;
+      border: none;
+    }
+    
+    .table td {
+      border: none;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+      padding-left: 50%;
+    }
+    
+    .table td:before {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      content: attr(data-label);
+      font-weight: bold;
+    }
+  }
+  
+  /* Customs */
+  .heading-color-overwrite{
+    color: black !important;
+  }
+
+  .edit-inputs{
+    padding: 6px;
+    border-radius: 5px;
+    border: 1px solid grey;
+    box-shadow: inset #838383 0px 0px 20px -12px;
+    margin-left: 0px;
+    font-size: small;
+}
+
+.edit-title-text{
+    margin: 5px 0px !important;
+    font-size: 10px !important;
+}
+
+.edit-active-row-highlight{
+    border-left: 5px solid black;
+}

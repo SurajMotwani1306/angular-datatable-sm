@@ -1,0 +1,65 @@
+<div class="main-content">
+    <div class="search-container">
+        <input type="text" *ngIf="parentValues?.searchVisibility" class="search-input" [(ngModel)]="searchTerm" placeholder="Search..." (keyup)="search()">
+        <div class="float-right-section" [style]="{ 'width': parentValues?.searchVisibility === false ? '100%':'' }">
+            <select class="pagination-select-dropdown" *ngIf="parentValues?.pagination" [(ngModel)]="itemsPerPage" (change)="updatedItemsPerPageCount()">
+                <option class="pagination-select-option" value="" disabled>Rows Per Page</option>
+                <option class="pagination-select-option" *ngFor="let options of paginationSelectOption" [value]="options">{{options}}</option>
+            </select>
+            <button *ngIf="parentValues?.exportToCSV" (click)="exportToCsv()" class="export-to-csv">Export to CSV</button>
+        </div>
+    </div>
+    
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th *ngFor="let h of headings">
+                        <a href="javascript:void(0)" class="heading-color-overwrite" (click)="sort(h)">{{ uppercaseMethod(h) }} <img
+                        src="../../../assets/sort.png" *ngIf="filteredPeople.length > 1"
+                        class="sort-align-right" /></a>
+                    </th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <ng-container *ngFor="let person of filteredPeople; let i = index">
+                    <tr id="row_{{person.id}}" (mouseover)="highlightRow(person)" (mouseout)="clearHighlight(person)" [class]="person.showDetails === true ? 'edit-active-row-highlight' : ''">
+                        <td *ngFor="let h of headings">{{ person[h] }}</td>
+                        <td>
+                            <a href="javascript:void(0)" *ngIf="!person.showDetails"><img src="../../../assets/edit.png" alt="Edit" (click)="editAccordion(i)"class="image-size"/></a>
+                        </td>
+                    </tr>
+                    <tr id="row_expanded_{{person.id}}" *ngIf="person.showDetails" class="edit-mode-container">
+                        <td colspan="1" *ngFor="let edit of headings, let i=index;">
+                            <!-- For Api calling better approach -->
+                            <!-- <app-edit-row [rowData]="{'name': edit, 'value':person[edit] }"/> -->
+    
+                            <!-- For directly updation visibility -->
+                            <div>
+                                <p class="edit-title-text">{{ edit.toUpperCase() }}:</p>
+                                <input class="edit-inputs" type="text" [(ngModel)]="person[edit]" [disabled]="i===0 ? true : false">
+                            </div>
+                        </td>
+                        <td colspan="1">
+                            <a href="javascript:void(0)" *ngIf="person.showDetails"><img src="../../../assets/save.png" alt="Edit" (click)="saveAccordion(i)"class="image-size"/></a>
+                        </td>
+                    </tr>
+                </ng-container>
+                <tr *ngIf="filteredPeople.length === 0">
+                    <td [attr.colspan]="headings.length+1" style="text-align: center;">No matching records found</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    
+    <div class="pagination pagination-updated" *ngIf="parentValues?.pagination && searchTerm === ''">
+        <button [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)" class="pagination-button">Previous</button>
+        <span class="pagination-text">{{ currentPage }}</span>
+        <button [disabled]="currentPage * itemsPerPage >= people.length || filteredPeople.length === 0"
+            (click)="onPageChange(currentPage + 1)" class="pagination-button">Next</button>
+    
+        <p class="pagination-count-text">No. of Pages Available: {{ ceilNumber(noOfPagesAvailable) }}</p>
+    </div>
+</div>
