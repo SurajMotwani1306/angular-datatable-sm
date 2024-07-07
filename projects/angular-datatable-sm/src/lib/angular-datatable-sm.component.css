@@ -1,59 +1,66 @@
-.sort-align-right{
+.sort-align-right {
     height: 12px;
     margin-left: 5px;
 }
 
-.search-input{
+.search-input {
     padding: 10px;
     margin: 8px;
     border-radius: 5px;
     border: 1px solid grey;
     box-shadow: inset #838383 0px 0px 20px -12px;
     margin-left: 0px;
+    padding-left: 30px;
 }
 
-.float-right-section{
-    float: right;
+/* Responsive media queries */
+@media only screen and (min-width: 768px) {
+    .float-right-section {
+        float: right;
+    }
 }
 
-.export-to-csv{
-    padding: 10px;
-    border-radius: 10px;
-    border: 1px solid grey;
-    background-color: blue;
-    color: white;
-    margin-top: 10px;
+.export-to-csv {
+    background-color: #007bff00;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s;
+    margin: 1px 0px;
 }
 
-.pagination-select-dropdown{
-    margin: 5px 10px;
-    padding: 10px;
+.export-to-csv:hover {
+    background-color: #ececec69;
+}
+
+.pagination-select-dropdown {
+    margin: 3px 10px;
+    padding: 9px;
     border-radius: 5px;
     border: 1px solid grey;
     box-shadow: inset #838383 0px 0px 20px -12px;
 }
 
-.pagination-select-option{
+.pagination-select-option {
     padding: 10px !important;
 }
 
-.pagination-button{
+.pagination-button {
     padding: 5px 10px;
     border-radius: 5px;
     border: 1px solid grey;
 }
 
-.pagination-text{
+.pagination-text {
     margin: auto 10px;
     font-weight: bold;
 }
 
-.pagination-updated{
+.pagination-updated {
     float: right;
     margin: 10px 0px;
 }
 
-.pagination-count-text{
+.pagination-count-text {
     margin: 3px;
     padding: 0px;
     font-size: xx-small;
@@ -61,28 +68,144 @@
     color: grey;
 }
 
-.image-size{
+.image-size {
     height: 24px;
     width: 24px;
 }
 
-.edit-mode-container{
+.image-size2 {
+    height: 24px;
+    width: 22px;
+    margin-left: 10px;
+}
+
+.image-size3 {
+    height: 24px;
+    width: 22px;
+}
+
+.edit-mode-container {
     background-color: #0075ff12;
     border-left: 3px solid black;
     box-shadow: inset 0 0 5px;
 }
 
-.un-highlight-row{
+.un-highlight-row {
     cursor: pointer !important;
 }
 
-.un-highlight-row-expanded{
+.un-highlight-row-expanded {
     background-color: #0075ff12 !important;
     border-left: 5px solid black;
     box-shadow: inset 0 0 5px;
     cursor: pointer !important;
 }
 
-.back-to-normal-without-cursor{
+.back-to-normal-without-cursor {
     background-color: #FFF !important;
+}
+
+.filter-icon-right {
+    float: right;
+    margin: 3px auto;
+    height: 12px;
+}
+
+
+.expandable {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+}
+
+.expandable.expanded {
+    max-height: 500px;
+    overflow-y: scroll;
+    opacity: 1;
+    animation: expandAnimation 0.3s ease-out;
+}
+
+@keyframes expandAnimation {
+    0% {
+        max-height: 0;
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    100% {
+        max-height: 500px;
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.image-resize {
+    height: 14px;
+    width: 14px;
+    position: relative;
+    z-index: 9999;
+    margin: 0px -25px -3px 0px;
+}
+
+.image-resize2 {
+    height: 10px;
+    position: relative;
+    z-index: 9999;
+    margin: 0px -43px -1px 0px;
+}
+
+.image-resize-export {
+    height: 33px;
+}
+
+.select-pagination {
+    padding-left: 35px;
+    width: 100px;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.margin-to-line-height {
+    margin: 8px 0px;
+}
+
+.border-box-filter {
+    border: 1px dotted #007bff;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-shadow: inset #007bff7d 0px 0px 20px -12px;
+}
+
+.filter-box-text {
+    position: absolute;
+    margin: -19px 10px;
+    padding: 0px 5px;
+    background-color: white;
+    color: #8f8f8f;
+    font-size: small;
+}
+
+.filter-arrow-icon {
+    height: 13px;
+    width: 15px;
+    margin-right: 5px;
+}
+
+.animated-div {
+    opacity: 0;
+    animation: fadeInAnimation 1s ease forwards;
+}
+
+@keyframes fadeInAnimation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }

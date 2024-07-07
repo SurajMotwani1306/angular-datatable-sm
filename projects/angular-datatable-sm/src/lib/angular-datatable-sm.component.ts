@@ -7,6 +7,7 @@ import { ExportToCsvService } from './services/export-to-csv/export-to-csv.servi
   styleUrl: './angular-datatable-sm.component.css'
 })
 export class AngularDatatableSmComponent {
+  
   @Input() data : any;
   people: any;
   headings: any;
@@ -16,19 +17,26 @@ export class AngularDatatableSmComponent {
   searchTerm: string = '';
   filteredPeople: any;
   currentPage: number = 1;
-  itemsPerPage: number =  5; // Number of items to display per page
+  itemsPerPage: number =  5;
   noOfPagesAvailable: number = 0;
   parentValues: any;
   dependentKeys: any;
   paginationSelectOption: Array<number> = [5,10,20,50,100];
+  extras: any;
+  unSelectedStatus: boolean = false;
+  replicaFilteredPeople: any;
+  filterBoxArrowStatus: boolean = true;
 
   constructor(private exToCSV : ExportToCsvService){}
 
   ngOnInit(){
     this.people = this.data.entries;
     this.headings = this.data.headers;
+    this.extras = this.data.extras;
     this.parentValues = this.data.permissions;
     this.dependentKeys = this.data.dependentKeys;
+
+    this.filterBoxArrowStatus = this.extras?.filterBoxArrowStatus;
 
     this.filteredPeople = [...this.people];
     this.filteredPeople.forEach((person:any) => person.showDetails = false);
@@ -49,6 +57,9 @@ export class AngularDatatableSmComponent {
     }
 
     this.noOfPages();
+
+    //Creating replica to utilize it when filtered one gets altered
+    this.replicaFilteredPeople = this.filteredPeople;
   }
 
   sort(column: string) {
@@ -75,7 +86,7 @@ export class AngularDatatableSmComponent {
 
   search() {
     if (!this.searchTerm) {
-      this.filteredPeople = [...this.people]; // Reset filteredPeople if searchTerm is empty
+      this.filteredPeople = [...this.people];
     }else{
       const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
       this.filteredPeople = this.people.filter((person:any) =>
@@ -89,15 +100,8 @@ export class AngularDatatableSmComponent {
 
   updateFilteredData() {
     let startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    console.log(this.currentPage);
-    console.log(startIndex);
-    
     let endIndex = startIndex + this.itemsPerPage;
-    console.log(endIndex);
-
     this.filteredPeople = this.people.slice(startIndex, endIndex);
-    console.log(this.filteredPeople);
-
   }
 
   onPageChange(pageNumber: number) {
@@ -162,5 +166,54 @@ export class AngularDatatableSmComponent {
 
   ceilNumber(num:number){
     return Math.ceil(num);
+  }
+
+  selectedColumnChange(event: any){
+    // required when passed to parent more
+    // console.log(event);
+  }
+
+  getStatusOfUnselectedAll(event: any){
+    this.unSelectedStatus = event;
+  }
+
+  deleteRow(ID:number){
+    // API Call for deleting row & get filtered data - No need to handle at frontend
+    this.filteredPeople = this.filteredPeople.filter((obj: any) => obj.id !== ID);
+  }
+
+  selectedColumnChange2(event: any){
+    // required when passed to parent more
+    let keysName = Object.keys(event);
+    
+    if(event[keysName[1]] === true){
+      let result = this.replicaFilteredPeople.filter((obj: any) => obj[keysName[0]] === event[keysName[0]]);
+      result.forEach((element:any) => {
+        this.filteredPeople.push(element);
+        this.filteredPeople.sort((a: any, b: any) => a.id - b.id)
+      });
+      
+    }else{
+      this.filteredPeople = this.filteredPeople.filter((obj: any) => obj[keysName[0]] !== event[keysName[0]]);
+    }
+
+    this.checkForDuplicationOfItems();
+  }
+
+  getStatusOfUnselectedAll2(event: any){
+    if(event === false){
+      this.filteredPeople = this.replicaFilteredPeople;
+    }else{
+      this.filteredPeople = [];
+    }
+    this.checkForDuplicationOfItems();
+  }
+
+  checkForDuplicationOfItems(){
+    this.filteredPeople = this.filteredPeople.filter((data: any, index: number) => data.id !== (this.filteredPeople[index + 1]?.id));
+  }
+
+  updateFilterBoxArrowStatus(){
+    this.filterBoxArrowStatus = !this.filterBoxArrowStatus;
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "angular-datatable-sm",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "peerDependencies": {
     "@angular/common": "^17.3.0",
     "@angular/core": "^17.3.0"
@@ -8,5 +8,36 @@
   "dependencies": {
     "tslib": "^2.3.0"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "description": "Dynamic datatable generation based on your requirement with values passed",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SurajMotwani1306/angular-datatable-sm.git"
+  },
+  "keywords": [
+    "angular-datatable-sm",
+    "angular-datatable",
+    "datatable",
+    "data-table",
+    "table",
+    "data",
+    "filter",
+    "progress",
+    "preogress-bar",
+    "rating",
+    "filters",
+    "edit",
+    "delete",
+    "search",
+    "angular",
+    "javascript",
+    "typescript"
+  ],
+  "author": "Suraj Motwani",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SurajMotwani1306/angular-datatable-sm/issues"
+  },
+  "homepage": "https://github.com/SurajMotwani1306/angular-datatable-sm#readme"
 }

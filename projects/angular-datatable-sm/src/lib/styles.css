@@ -194,12 +194,12 @@ footer {
    */
   /* Darken row on hover */
   .table tbody tr:hover {
-    background-color: rgba(0, 0, 0, 0.05); /* Darken with 5% opacity */
+    background-color: #f8f9fa; /* Darken with 5% opacity */
     cursor: pointer;
   }
   
   /* Responsive adjustments */
-  @media (max-width: 768px) {
+  @media (max-width: 480px) {
     .table {
       display: block;
       overflow-x: auto;
@@ -211,21 +211,21 @@ footer {
     }
     
     .table thead tr {
-      position: absolute;
-      top: -9999px;
-      left: -9999px;
+      color: #333;
+      font-weight: bold;
+      text-transform: uppercase;
     }
     
     .table tr {
       margin-bottom: 15px;
-      border: none;
+      border-bottom: 1px solid rgb(143, 143, 143);
     }
     
     .table td {
       border: none;
       border-bottom: 1px solid #ddd;
       position: relative;
-      padding-left: 50%;
+      text-align: left;
     }
     
     .table td:before {
@@ -238,6 +238,30 @@ footer {
       content: attr(data-label);
       font-weight: bold;
     }
+
+    app-customized-dropdown2{
+      float: right;
+    }
+  }
+
+  .ml-10{
+    margin-left: 10px;
+  }
+
+  .mr-10{
+    margin-right: 10px;
+  }
+
+  .d-flex{
+    display: flex;
+  }
+
+  .d-block{
+    display: block;
+  }
+
+  .d-inline-table{
+    display: inline-table;
   }
   
   /* Customs */
