@@ -1,12 +1,16 @@
 {
   "name": "angular-datatable-sm",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "peerDependencies": {
     "@angular/common": "^17.3.0",
     "@angular/core": "^17.3.0"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.3.0",
+    "angular-dropdown-select": "^0.1.6",
+    "angular-filter-dropdown": "^1.0.1",
+    "angular-progress-bar-sm": "^1.1.1",
+    "angular-rating-showcase": "^0.0.1"
   },
   "sideEffects": false,
   "description": "Dynamic datatable generation based on your requirement with values passed",
