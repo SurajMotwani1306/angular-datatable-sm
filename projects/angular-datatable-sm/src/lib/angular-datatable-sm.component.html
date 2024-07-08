@@ -84,8 +84,12 @@
                     </ng-container>
                     <!-- Action Tab Data -->
                     <td *ngIf="!unSelectedStatus && (parentValues.showcaseActionButtons.includes('edit') || parentValues.showcaseActionButtons.includes('delete'))">
-                        <a href="javascript:void(0)" *ngIf="!person.showDetails && parentValues.showcaseActionButtons.includes('edit')"><img src="../../../assets/edit.png" alt="Edit" (click)="editAccordion(i)"class="image-size"/></a>
-                        <a href="javascript:void(0)" *ngIf="parentValues.showcaseActionButtons.includes('delete')"><img src="../../../assets/delete.png" alt="Delete" (click)="deleteRow(person.id)" class="{{ person.showDetails ? 'image-size3' : 'image-size2' }}"/></a>
+                        <a href="javascript:void(0)" *ngIf="!person.showDetails && parentValues.showcaseActionButtons.includes('edit')">
+                            <img src="../../../assets/edit.png" alt="Edit" (click)="editAccordion(i)" class="image-size background-btn" [style]="{'background-color' : dependentKeys.editSaveActionButtonBgColor ? dependentKeys.editSaveActionButtonBgColor : ''}"/>
+                        </a>
+                        <a href="javascript:void(0)" *ngIf="parentValues.showcaseActionButtons.includes('delete')">
+                            <img src="../../../assets/delete.png" alt="Delete" (click)="deleteRow(person.id)" class="background-btn" [class]="person.showDetails ? 'image-size3' : 'image-size2'" [style]="{'background-color' : dependentKeys.deleteActionButtonBgColor ? dependentKeys.deleteActionButtonBgColor : ''}"/>
+                        </a>
                     </td>
                 </tr>
 
@@ -105,7 +109,9 @@
                     </ng-container>
                     <!-- Save Button -->
                     <td colspan="1" >
-                        <a href="javascript:void(0)" *ngIf="person.showDetails"><img src="../../../assets/save.png" alt="Save" (click)="saveAccordion(i)"class="image-size"/></a>
+                        <a href="javascript:void(0)" *ngIf="person.showDetails">
+                            <img src="../../../assets/save.png" alt="Save" (click)="saveAccordion(i)" class="image-size background-btn" [style]="{'background-color' : dependentKeys.editSaveActionButtonBgColor ? dependentKeys.editSaveActionButtonBgColor : ''}"/>
+                        </a>
                     </td>
                 </tr>
             </ng-container>
