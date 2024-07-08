@@ -1,5 +1,5 @@
 <!-- Filter Section -->
-<div class="search-container border-box-filter" [class]="filterBoxArrowStatus === true ? 'animated-div' : ''">
+<div class="search-container border-box-filter" [class]="filterBoxArrowStatus === true ? 'animated-div' : ''" *ngIf="parentValues?.searchVisibility || parentValues?.pagination || parentValues?.filterTableHeadersVisibility || parentValues?.exportToCsvVisibility">
     <a href="javascript:void(0)">
         <span class="filter-box-text">
             <img *ngIf="filterBoxArrowStatus === true" src="../../../assets/filter_above_arrow.png" class="filter-arrow-icon" (click)="updateFilterBoxArrowStatus()"/>
@@ -7,14 +7,14 @@
             <span (click)="updateFilterBoxArrowStatus()">Filters:</span>
         </span>
     </a>
-    <span [style]="{'display': filterBoxArrowStatus === false ? 'none' : ''}">
-        <span class="ml-10 d-inline-table">
+    <span [style]="{'display': filterBoxArrowStatus === false ? 'none' : ''}" *ngIf="parentValues?.searchVisibility || parentValues?.pagination">
+        <span class="ml-10 d-inline-table" *ngIf="parentValues?.searchVisibility">
             <img src="../../../assets/search.png" class="image-resize" alt="Search" />
-            <input type="text" *ngIf="parentValues?.searchVisibility" class="search-input" [(ngModel)]="searchTerm" placeholder="Search..." (keyup)="search()">
+            <input type="text" class="search-input" [(ngModel)]="searchTerm" placeholder="Search..." (keyup)="search()">
         </span>
-        <span class="ml-10 d-inline-table">
+        <span class="ml-10 d-inline-table" *ngIf="parentValues?.pagination">
             <img src="../../../assets/pagination.png" alt="Pagination Icon" class="image-resize2" />
-            <select class="pagination-select-dropdown select-pagination" *ngIf="parentValues?.pagination" [(ngModel)]="itemsPerPage" (change)="updatedItemsPerPageCount()">
+            <select class="pagination-select-dropdown select-pagination" [(ngModel)]="itemsPerPage" (change)="updatedItemsPerPageCount()">
                 <option class="pagination-select-option" value="" disabled>Rows Per Page</option>
                 <option class="pagination-select-option" *ngFor="let options of paginationSelectOption" [value]="options">{{options}}</option>
             </select>
@@ -22,13 +22,18 @@
     </span>
 
 
-    <div class="float-right-section d-flex margin-to-line-height" [style]="{ 'width': parentValues?.searchVisibility === false ? '100%':'', 'display': filterBoxArrowStatus === false ? 'none' : ''}">
-        <div>
+    <div 
+        [class]="[(parentValues?.searchVisibility === true || parentValues?.pagination === true) ? 'float-right-section' : '', (parentValues?.searchVisibility === false && parentValues?.pagination === true) ? 'margin-to-line-height2' : '']" 
+        class="d-flex margin-to-line-height" 
+        [style]="{ 'display': filterBoxArrowStatus === false ? 'none' : ''}"
+        *ngIf="parentValues?.filterTableHeadersVisibility || parentValues?.exportToCsvVisibility"
+    >
+        <div *ngIf="parentValues?.filterTableHeadersVisibility">
             <lib-angular-dropdown-select class="mr-10" [headings]="headings" [extras]="extras" (onCheckBoxStatusChanged)="selectedColumnChange($event)" (onUnselectAll)="getStatusOfUnselectedAll($event)"></lib-angular-dropdown-select>
         </div>
         <div>
             <a href="javascript:void(0)"  class="export-to-csv">
-                <img src="../../../assets/export.png" alt="Export to CSV" *ngIf="parentValues?.exportToCSV" (click)="exportToCsv()" class="image-resize-export" />
+                <img src="../../../assets/export.png" alt="Export to CSV" *ngIf="parentValues?.exportToCsvVisibility" (click)="exportToCsv()" class="image-resize-export" />
             </a>
         </div>
     </div>
@@ -49,7 +54,10 @@
                                 class="sort-align-right"
                                 (click)="sort(h.name)"
                             />
-                            <lib-angular-filter-dropdown class="float-right-section" [tableData]="filteredPeople" [columnName]="h.name" (onCheckBoxStatusChanged)="selectedColumnChange2($event)" (onUnselectAll)="getStatusOfUnselectedAll2($event)"></lib-angular-filter-dropdown>
+
+                            <span *ngIf="parentValues?.filterBtnTableContentVisibility && h.name === dependentKeys.filterColumn">
+                                <lib-angular-filter-dropdown class="float-right-section" [tableData]="filteredPeople" [columnName]="h.name" (onCheckBoxStatusChanged)="selectedColumnChange2($event)" (onUnselectAll)="getStatusOfUnselectedAll2($event)"></lib-angular-filter-dropdown>
+                            </span>
                         </a>
                     </th>
                 </ng-container>
@@ -86,7 +94,7 @@
                     <ng-container *ngFor="let edit of headings, let i=index;">
                         <td colspan="1" *ngIf="headings[i].checked === true">
                             <!-- For Api calling better approach -->
-                            <!-- <app-edit-row [rowData]="{'name': edit, 'value':person[edit] }"/> -->
+                            <!-- <app-edit-row [rowData]="{'index': i, 'name': edit.name, 'value':person[edit.name] }"/> -->
     
                             <!-- For directly updation visibility -->
                             <div>

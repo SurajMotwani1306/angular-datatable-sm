@@ -26,6 +26,7 @@ export class AngularDatatableSmComponent {
   unSelectedStatus: boolean = false;
   replicaFilteredPeople: any;
   filterBoxArrowStatus: boolean = true;
+  replicaOfHeading: any;
 
   constructor(private exToCSV : ExportToCsvService){}
 
@@ -60,6 +61,19 @@ export class AngularDatatableSmComponent {
 
     //Creating replica to utilize it when filtered one gets altered
     this.replicaFilteredPeople = this.filteredPeople;
+
+    this.methodToDisplayTableColumnsBasedOnParentCheck();
+  }
+
+  methodToDisplayTableColumnsBasedOnParentCheck(){
+    this.replicaOfHeading = this.headings;
+    if(this.parentValues.filterTableHeadersVisibility === false){
+      this.headings.forEach((item:any, index: number) => {
+        this.headings[index].checked = true;
+      });
+    }else{
+      this.headings = this.replicaOfHeading;
+    }
   }
 
   sort(column: string) {
@@ -174,7 +188,7 @@ export class AngularDatatableSmComponent {
   }
 
   getStatusOfUnselectedAll(event: any){
-    this.unSelectedStatus = event;
+      this.unSelectedStatus = event;
   }
 
   deleteRow(ID:number){
