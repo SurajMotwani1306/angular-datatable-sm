@@ -1,5 +1,5 @@
 # angular-datatable-sm
-Dynamic Datatable SM generation based on your requirement with values passed
+Dynamic Datatable SM generation based on your requirement i.e. Table heading with number of columns & its table data.
 <br/>
 
 <table>
@@ -35,7 +35,7 @@ import { AngularDatatableSmModule } from 'angular-datatable-sm';
 ```
 
 ### Step 2:
-Create a service file, copy with template provided in your project - <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/services/tableData/table-data.service.ts">table-data.service</a><br/>
+Create a service file in your project & copy the template provided for your project - <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/services/tableData/table-data.service.ts">table-data.service</a><br/>
 & import it inside component where you want to use our "angular-datatable-sm" package:
 ```ts
 import { TableDataService } from './services/tableData/table-data.service';
@@ -117,7 +117,7 @@ let tableData = {
   };
 ```
 
-or you can try it with json file importing in service file as well: <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/assets/json/data.json">JSON Link</a>
+or you can try it with json file importing in your service file as well: <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/assets/json/data.json">JSON Link</a>
 
 ## Properties
 
@@ -140,24 +140,24 @@ or you can try it with json file importing in service file as well: <a href="htt
 
 3. <b>permissions.filterTableHeadersVisibility:</b>
   <br/> Show/Hide filter for header button.
-  <br/>Dependent Property 1: "extras.dropdownButtonText" - To update Dropdown Button text, otherwise default - "Table Columns"
-  <br/>Dependent Property 2: "extras.uncheckAllStatus" - To maintain uncheck All status in overall Table for headers dropdown.
+  <br/>Dependent Property 1: <b>"extras.dropdownButtonText"</b> - To update Dropdown Button text, otherwise default - "Table Columns"
+  <br/>Dependent Property 2: <b>"extras.uncheckAllStatus"</b> - To maintain uncheck All status in overall Table for headers dropdown.
 
 4. <b>permissions.filterBtnTableContentVisibility:</b>
   <br/> Show/Hide filter icon for column wise filteration.
-  <br/>Dependent Properties: "dependentKeys.filterColumn" - To add column wise filter functionality to the table & mention particular field name from "entries" - Array of Object, likewise - "name".
+  <br/>Dependent Properties: <b>"dependentKeys.filterColumn"</b> - To add column wise filter functionality to the table & mention particular field name from "entries" - Array of Object, likewise - "name".
 
 5. <b>permissions.showcaseActionButtons:</b>
   <br/> Mention 'edit' to enable edit functionality & 'delete' to enable delete button in Array.
-  <br/>Dependent Properties: "dependentKeys.editSaveActionButtonBgColor", "dependentKeys.deleteActionButtonBgColor" & "dependentKeys.closeActionButtonBgColor" - To add background colors to button, by default transparent.
+  <br/>Dependent Properties: <b>"dependentKeys.editSaveActionButtonBgColor", "dependentKeys.deleteActionButtonBgColor" & "dependentKeys.closeActionButtonBgColor"</b> - To add background colors to button, by default transparent.
 
 6. <b>dependentKeys.progressColumn:</b>
   <br/> Mention column/property - exact field from "entries", to enable progressbar to particular column/field. It should be numeric value.
-  <br/>Dependent Properties: "dependentKeys.progressBarType" - "bar" or "circle" to represent in such form.
+  <br/>Dependent Properties: <b>"dependentKeys.progressBarType"</b> - "bar" or "circle" to represent in such form.
 
 7. <b>dependentKeys.ratingsColumn:</b>
   <br/> Mention column/property - exact field from "entries", to enable ratings to particular column/field (Gained ratings). It should be numeric value.
-  <br/>Dependent Properties: "dependentKeys.maxRating" - Maximum Stars to represent.
+  <br/>Dependent Properties: <b>"dependentKeys.maxRating"</b> - Maximum Stars to represent.
 
 8. <b>extras.filterBoxArrowStatus:</b>
   <br/> Show/Minimize Filter box at the top of the table, on load.
