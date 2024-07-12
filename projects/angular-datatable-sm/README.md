@@ -6,7 +6,7 @@ Dynamic Datatable SM generation based on your requirement with values passed
   <tr>
     <td align="center">
       <img alt="React Native Stylish List"
-        src="./src/lib/assets/Screeenshot/data-table.PNG" />
+        src="projects/angular-datatable-sm/src/lib/assets/Screeenshot/data-table.PNG" />
     </td>
    </tr>
 </table>

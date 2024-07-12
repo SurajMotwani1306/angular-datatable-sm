@@ -19,7 +19,9 @@ npm i angular-datatable-sm
 
 ## Usage
 
-### Import
+## Import
+<br/>
+### Step 1
 ```ts
 import { AngularDatatableSmModule } from 'angular-datatable-sm';
 
