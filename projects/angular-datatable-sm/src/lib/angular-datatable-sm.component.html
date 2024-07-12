@@ -1,135 +1,137 @@
-<!-- Filter Section -->
-<div class="search-container border-box-filter" [class]="filterBoxArrowStatus === true ? 'animated-div' : ''" *ngIf="parentValues?.searchVisibility || parentValues?.pagination || parentValues?.filterTableHeadersVisibility || parentValues?.exportToCsvVisibility">
-    <a href="javascript:void(0)">
-        <span class="filter-box-text">
-            <img *ngIf="filterBoxArrowStatus === true" src="../../../assets/filter_above_arrow.png" class="filter-arrow-icon" (click)="updateFilterBoxArrowStatus()"/>
-            <img *ngIf="filterBoxArrowStatus === false" src="../../../assets/filter_below_arrow.png" class="filter-arrow-icon" (click)="updateFilterBoxArrowStatus()"/>
-            <span (click)="updateFilterBoxArrowStatus()">Filters:</span>
+<div *ngIf="data">
+    <!-- Filter Section -->
+    <div class="search-container border-box-filter z-index-working" [class]="filterBoxArrowStatus === true ? 'animated-div' : ''" *ngIf="parentValues?.searchVisibility || pagination || parentValues?.filterTableHeadersVisibility || parentValues?.exportToCsvVisibility">
+        <a href="javascript:void(0)">
+            <span class="filter-box-text">
+                <img *ngIf="filterBoxArrowStatus === true" src="./assets/filter_above_arrow.png" class="filter-arrow-icon" (click)="updateFilterBoxArrowStatus()" alt="Above Arrow"/>
+                <img *ngIf="filterBoxArrowStatus === false" src="./assets/filter_below_arrow.png" class="filter-arrow-icon" (click)="updateFilterBoxArrowStatus()" alt="Below Arrow"/>
+                <span (click)="updateFilterBoxArrowStatus()">Filters:</span>
+            </span>
+        </a>
+        <span [style]="{'display': filterBoxArrowStatus === false ? 'none' : ''}" *ngIf="parentValues?.searchVisibility || pagination">
+            <span class="d-inline-table" *ngIf="parentValues?.searchVisibility">
+                <input type="text" class="search-input" [(ngModel)]="searchTerm" placeholder="Search..." (keyup.enter)="search()">
+                <img src="./assets/search.png" class="image-resize" alt="Search" (click)="search()"/>
+            </span>
+            <span class="d-inline-table" *ngIf="pagination">
+                <img src="./assets/pagination.png" alt="Pagination Icon" class="image-resize2"/>
+                <select class="pagination-select-dropdown select-pagination" [(ngModel)]="itemsPerPage" (change)="updatedItemsPerPageCount()" aria-label="Items-per-page-dropdown">
+                    <option class="pagination-select-option" value="" disabled>Per Page</option>
+                    <option class="pagination-select-option" *ngFor="let options of paginationSelectOption" [value]="options">{{options}}</option>
+                </select>
+            </span>
         </span>
-    </a>
-    <span [style]="{'display': filterBoxArrowStatus === false ? 'none' : ''}" *ngIf="parentValues?.searchVisibility || parentValues?.pagination">
-        <span class="ml-10 d-inline-table" *ngIf="parentValues?.searchVisibility">
-            <img src="../../../assets/search.png" class="image-resize" alt="Search" />
-            <input type="text" class="search-input" [(ngModel)]="searchTerm" placeholder="Search..." (keyup)="search()">
-        </span>
-        <span class="ml-10 d-inline-table" *ngIf="parentValues?.pagination">
-            <img src="../../../assets/pagination.png" alt="Pagination Icon" class="image-resize2" />
-            <select class="pagination-select-dropdown select-pagination" [(ngModel)]="itemsPerPage" (change)="updatedItemsPerPageCount()">
-                <option class="pagination-select-option" value="" disabled>Rows Per Page</option>
-                <option class="pagination-select-option" *ngFor="let options of paginationSelectOption" [value]="options">{{options}}</option>
-            </select>
-        </span>
-    </span>
 
 
-    <div 
-        [class]="[(parentValues?.searchVisibility === true || parentValues?.pagination === true) ? 'float-right-section' : '', (parentValues?.searchVisibility === false && parentValues?.pagination === true) ? 'margin-to-line-height2' : '']" 
-        class="d-flex margin-to-line-height" 
-        [style]="{ 'display': filterBoxArrowStatus === false ? 'none' : ''}"
-        *ngIf="parentValues?.filterTableHeadersVisibility || parentValues?.exportToCsvVisibility"
-    >
-        <div *ngIf="parentValues?.filterTableHeadersVisibility">
-            <lib-angular-dropdown-select class="mr-10" [headings]="headings" [extras]="extras" (onCheckBoxStatusChanged)="selectedColumnChange($event)" (onUnselectAll)="getStatusOfUnselectedAll($event)"></lib-angular-dropdown-select>
-        </div>
-        <div>
-            <a href="javascript:void(0)"  class="export-to-csv">
-                <img src="../../../assets/export.png" alt="Export to CSV" *ngIf="parentValues?.exportToCsvVisibility" (click)="exportToCsv()" class="image-resize-export" />
-            </a>
+        <div 
+            [class]="[(parentValues?.searchVisibility === true || pagination === true) ? 'float-right-section' : '', (parentValues?.searchVisibility === false && pagination === true) ? 'margin-to-line-height2' : '']" 
+            class="d-flex margin-to-line-height" 
+            [style]="{ 'display': filterBoxArrowStatus === false ? 'none' : ''}"
+            *ngIf="parentValues?.filterTableHeadersVisibility || parentValues?.exportToCsvVisibility"
+        >
+            <div *ngIf="parentValues?.filterTableHeadersVisibility">
+                <lib-angular-dropdown-select class="mr-10" [headings]="headings" [extras]="extras" (onCheckBoxStatusChanged)="selectedColumnChange($event)" (onUnselectAll)="getStatusOfUnselectedAll($event)"></lib-angular-dropdown-select>
+            </div>
+            <div>
+                <a href="javascript:void(0)"  class="export-to-csv">
+                    <img src="./assets/export.png" alt="Export to CSV" *ngIf="parentValues?.exportToCsvVisibility" (click)="exportToCsv()" class="image-resize-export" />
+                </a>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="table-container">
-    <table class="table">
-        <!-- Table Head -->
-        <thead>
-            <tr>
-                <ng-container *ngFor="let h of headings, let j = index">
-                    <th *ngIf="h.checked">
-                        <a href="javascript:void(0)" class="heading-color-overwrite">
-                            <span (click)="sort(h.name)">{{ uppercaseMethod(h.name) }} </span>
-                            <img 
-                                src="../../../assets/sort.png" 
-                                *ngIf="filteredPeople.length > 1"
-                                class="sort-align-right"
-                                (click)="sort(h.name)"
-                            />
+    <div class="table-container">
+        <table class="table">
+            <!-- Table Head -->
+            <thead>
+                <tr>
+                    <ng-container *ngFor="let h of headings, let j = index">
+                        <th *ngIf="h.checked">
+                            <a href="javascript:void(0)" class="heading-color-overwrite">
+                                <span (click)="sort(h.name)">{{ h.name.toUpperCase() }} </span>
+                                <img 
+                                    src="./assets/sort.png" 
+                                    *ngIf="filteredPeople?.length > 1"
+                                    class="sort-align-right"
+                                    (click)="sort(h.name)"
+                                    alt="Sort-Icon"
+                                />
 
-                            <span *ngIf="parentValues?.filterBtnTableContentVisibility && h.name === dependentKeys.filterColumn">
-                                <lib-angular-filter-dropdown class="float-right-section" [tableData]="filteredPeople" [columnName]="h.name" (onCheckBoxStatusChanged)="selectedColumnChange2($event)" (onUnselectAll)="getStatusOfUnselectedAll2($event)"></lib-angular-filter-dropdown>
-                            </span>
-                        </a>
-                    </th>
+                                <span *ngIf="parentValues?.filterBtnTableContentVisibility && h.name === dependentKeys.filterColumn">
+                                    <lib-angular-filter-dropdown class="float-right-section" [tableData]="filteredPeople" [columnName]="h.name" (onCheckBoxStatusChanged)="selectedColumnChange2($event)" (onUnselectAll)="getStatusOfUnselectedAll2($event)"></lib-angular-filter-dropdown>
+                                </span>
+                            </a>
+                        </th>
+                    </ng-container>
+                    <th *ngIf="!unSelectedStatus && (parentValues?.showcaseActionButtons?.includes('edit') || parentValues?.showcaseActionButtons?.includes('delete'))">Actions</th>
+                </tr>
+            </thead>
+            <!-- Table Body -->
+            <tbody>
+                <ng-container *ngFor="let person of filteredPeople; let i = index">
+                    <!-- Data Row -->
+                    <tr id="row_{{person.id}}" (mouseover)="highlightRow(person)" (mouseout)="clearHighlight(person)" [class]="person.showDetails === true ? 'edit-active-row-highlight' : ''">
+                        <ng-container *ngFor="let h of headings">
+                            <td *ngIf="h.checked === true">
+                                <span *ngIf="dependentKeys.progressColumn !== h.name && dependentKeys.ratingsColumn !== h.name">{{ person[h.name] }}</span>
+                                <!-- Progress Bar -->
+                                <span *ngIf="dependentKeys.progressColumn === h.name">
+                                    <lib-angular-progress-bar-sm [progressValue]="person[h.name]" [progressColor]="'#000'" [progressBarType]="dependentKeys.progressBarType"/>
+                                </span>
+                                <!-- Ratings -->
+                                <span *ngIf="dependentKeys.ratingsColumn === h.name">
+                                    <lib-angular-rating-showcase [ratingsCount]="person[h.name]" [maxRating]="dependentKeys.maxRating" />
+                                </span>
+                            </td>
+                        </ng-container>
+                        <!-- Action Tab Data -->
+                        <td *ngIf="!unSelectedStatus && (parentValues.showcaseActionButtons.includes('edit') || parentValues.showcaseActionButtons.includes('delete'))">
+                            <a href="javascript:void(0)" *ngIf="!person.showDetails && parentValues.showcaseActionButtons.includes('edit')">
+                                <img src="./assets/edit.png" alt="Edit" (click)="editAccordion(i)" class="image-size background-btn" [style]="{'background-color' : dependentKeys.editSaveActionButtonBgColor ? dependentKeys.editSaveActionButtonBgColor : ''}"/>
+                            </a>
+                            <a href="javascript:void(0)" *ngIf="parentValues.showcaseActionButtons.includes('delete')">
+                                <img src="./assets/delete.png" alt="Delete" (click)="deleteRow(person.id)" class="background-btn" [class]="person.showDetails ? 'image-size3' : 'image-size2'" [style]="{'background-color' : dependentKeys.deleteActionButtonBgColor ? dependentKeys.deleteActionButtonBgColor : ''}"/>
+                            </a>
+                        </td>
+                    </tr>
+
+                    <!-- Edit Row -->
+                    <tr id="row_expanded_{{person.id}}" *ngIf="person.showDetails" class="edit-mode-container expandable"
+                        [ngClass]="{'expanded': person.showDetails}">
+                        <ng-container *ngFor="let edit of headings, let i=index;">
+                            <td colspan="1" *ngIf="headings[i].checked === true">
+                                <lib-edit-row [rowData]="{'index': i, 'name': edit.name, 'value':person[edit.name] }" (updatedText)="updatedEditFieldValue($event)"/>
+                            </td>
+                        </ng-container>
+                        <!-- Save Button -->
+                        <td colspan="1">
+                            <a href="javascript:void(0)" *ngIf="person.showDetails">
+                                <img src="./assets/save.png" alt="Save" (click)="saveAccordion(i, person)" class="image-size background-btn"
+                                    [style]="{'background-color' : dependentKeys.editSaveActionButtonBgColor ? dependentKeys.editSaveActionButtonBgColor : ''}" />
+                            </a>
+                            <a href="javascript:void(0)" *ngIf="person.showDetails">
+                                <img src="./assets/cross.png" alt="Close" (click)="closeAccordion(i)" class="image-size-close background-btn-2"
+                                    [style]="{'background-color' : dependentKeys.closeActionButtonBgColor ? dependentKeys.closeActionButtonBgColor : ''}" />
+                            </a>
+                        </td>
+                    </tr>
                 </ng-container>
-                <th *ngIf="!unSelectedStatus && (parentValues.showcaseActionButtons.includes('edit') || parentValues.showcaseActionButtons.includes('delete'))">Actions</th>
-            </tr>
-        </thead>
-        <!-- Table Body -->
-        <tbody>
-            <ng-container *ngFor="let person of filteredPeople; let i = index">
-                <!-- Data Row -->
-                <tr id="row_{{person.id}}" (mouseover)="highlightRow(person)" (mouseout)="clearHighlight(person)" [class]="person.showDetails === true ? 'edit-active-row-highlight' : ''">
-                    <ng-container *ngFor="let h of headings">
-                        <td *ngIf="h.checked === true">
-                            <span *ngIf="dependentKeys.progressColumn !== h.name && dependentKeys.ratingsColumn !== h.name">{{ person[h.name] }}</span>
-                            <!-- Progress Bar -->
-                            <span *ngIf="dependentKeys.progressColumn === h.name">
-                                <lib-angular-progress-bar-sm [progressValue]="person[h.name]" [progressColor]="'#000'" [progressBarType]="dependentKeys.progressBarType"/>
-                            </span>
-                            <!-- Ratings -->
-                            <span *ngIf="dependentKeys.ratingsColumn === h.name">
-                                <lib-angular-rating-showcase [ratingsCount]="person[h.name]" [maxRating]="dependentKeys.maxRating" />
-                            </span>
-                        </td>
-                    </ng-container>
-                    <!-- Action Tab Data -->
-                    <td *ngIf="!unSelectedStatus && (parentValues.showcaseActionButtons.includes('edit') || parentValues.showcaseActionButtons.includes('delete'))">
-                        <a href="javascript:void(0)" *ngIf="!person.showDetails && parentValues.showcaseActionButtons.includes('edit')">
-                            <img src="../../../assets/edit.png" alt="Edit" (click)="editAccordion(i)" class="image-size background-btn" [style]="{'background-color' : dependentKeys.editSaveActionButtonBgColor ? dependentKeys.editSaveActionButtonBgColor : ''}"/>
-                        </a>
-                        <a href="javascript:void(0)" *ngIf="parentValues.showcaseActionButtons.includes('delete')">
-                            <img src="../../../assets/delete.png" alt="Delete" (click)="deleteRow(person.id)" class="background-btn" [class]="person.showDetails ? 'image-size3' : 'image-size2'" [style]="{'background-color' : dependentKeys.deleteActionButtonBgColor ? dependentKeys.deleteActionButtonBgColor : ''}"/>
-                        </a>
-                    </td>
+
+                <!-- No Data -->
+                <tr *ngIf="filteredPeople?.length === 0">
+                    <td [attr.colspan]="headings.length+1" style="text-align: center; height: 200px;">No matching records found</td>
                 </tr>
+            </tbody>
+        </table>
+    </div>
 
-                <!-- Edit Row -->
-                <tr id="row_expanded_{{person.id}}" *ngIf="person.showDetails" class="edit-mode-container expandable" [ngClass]="{'expanded': person.showDetails}">
-                    <ng-container *ngFor="let edit of headings, let i=index;">
-                        <td colspan="1" *ngIf="headings[i].checked === true">
-                            <!-- For Api calling better approach -->
-                            <!-- <app-edit-row [rowData]="{'index': i, 'name': edit.name, 'value':person[edit.name] }"/> -->
-    
-                            <!-- For directly updation visibility -->
-                            <div>
-                                <p class="edit-title-text">{{ edit.name.toUpperCase() }}:</p>
-                                <input class="edit-inputs" type="text" [(ngModel)]="person[edit.name]" [disabled]="i===0 ? true : false">
-                            </div>
-                        </td>
-                    </ng-container>
-                    <!-- Save Button -->
-                    <td colspan="1" >
-                        <a href="javascript:void(0)" *ngIf="person.showDetails">
-                            <img src="../../../assets/save.png" alt="Save" (click)="saveAccordion(i)" class="image-size background-btn" [style]="{'background-color' : dependentKeys.editSaveActionButtonBgColor ? dependentKeys.editSaveActionButtonBgColor : ''}"/>
-                        </a>
-                    </td>
-                </tr>
-            </ng-container>
+    <!-- Pagination -->
+    <div class="pagination pagination-updated" *ngIf="pagination">
+        <button [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)" class="pagination-button">Previous</button>
+        <span class="pagination-text">{{ currentPage }}</span>
+        <button [disabled]="currentPage === noOfPagesAvailable || filteredPeople?.length === 0"
+            (click)="onPageChange(currentPage + 1)" class="pagination-button">Next</button>
 
-            <!-- No Data -->
-            <tr *ngIf="filteredPeople.length === 0">
-                <td [attr.colspan]="headings.length+1" style="text-align: center;">No matching records found</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<!-- Pagination -->
-<div class="pagination pagination-updated" *ngIf="parentValues?.pagination && searchTerm === ''">
-    <button [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)" class="pagination-button">Previous</button>
-    <span class="pagination-text">{{ currentPage }}</span>
-    <button [disabled]="currentPage * itemsPerPage >= people.length || filteredPeople.length === 0"
-        (click)="onPageChange(currentPage + 1)" class="pagination-button">Next</button>
-
-    <p class="pagination-count-text">No. of Pages Available: {{ ceilNumber(noOfPagesAvailable) }}</p>
+        <p class="pagination-count-text">No. of Pages Available: {{ noOfPagesAvailable }}</p>
+    </div>
 </div>

@@ -1,0 +1,4 @@
+<div>
+    <p class="edit-title-text">{{ rowData.name.toUpperCase() }}:</p>
+    <input class="edit-inputs" type="text" [(ngModel)]="rowData.value" (change)="getchanged()" [disabled]="(rowData.name==='id' || rowData.name==='_id') ? true : false">
+</div>

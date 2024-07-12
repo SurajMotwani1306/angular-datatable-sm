@@ -3,6 +3,11 @@
     margin-left: 5px;
 }
 
+.z-index-working{
+    position: relative;
+    z-index: 9;
+}
+
 .search-input {
     padding: 10px;
     margin: 8px;
@@ -10,7 +15,7 @@
     border: 1px solid grey;
     box-shadow: inset #838383 0px 0px 20px -12px;
     margin-left: 0px;
-    padding-left: 30px;
+    padding-right: 40px;
 }
 
 /* Responsive media queries */
@@ -20,13 +25,20 @@
     }
 }
 
-@media only screen and (max-width: 320px) {
+@media only screen and (max-width: 375px) {
     .pagination-select-dropdown {
-        margin: 3px 6px !important;
+        margin: 3px 0px !important;
         padding: 9px;
         border-radius: 5px;
         border: 1px solid grey;
         box-shadow: inset #838383 0px 0px 20px -12px;
+    }
+
+    .image-resize2[_ngcontent-ng-c2243115458] {
+        height: 10px;
+        position: absolute;
+        z-index: 9999;
+        margin: 16px 0px 0px 9px !important;
     }
 }
 
@@ -43,7 +55,7 @@
 }
 
 .pagination-select-dropdown {
-    margin: 3px 10px;
+    margin: 3px 5px;
     padding: 9px;
     border-radius: 5px;
     border: 1px solid grey;
@@ -57,7 +69,8 @@
 .pagination-button {
     padding: 5px 10px;
     border-radius: 5px;
-    border: 1px solid grey;
+    border: 1px solid #c4e0ff;
+    background-color: #c4e0ff;
 }
 
 .pagination-text {
@@ -151,18 +164,22 @@
 }
 
 .image-resize {
-    height: 14px;
-    width: 14px;
+    height: 22px;
+    width: 22px;
     position: relative;
     z-index: 9999;
-    margin: 0px -25px -3px 0px;
+    margin: 0px 13px -9px -43px;
+    padding: 3px;
+    border-radius: 16px;
+    background-color: #000000;
+    cursor: pointer;
 }
 
 .image-resize2 {
     height: 10px;
-    position: relative;
+    position: absolute;
     z-index: 9999;
-    margin: 0px -43px -1px 0px;
+    margin: 16px 0px 0px 14px;
 }
 
 .image-resize-export {
@@ -199,7 +216,7 @@
     margin: -19px 10px;
     padding: 0px 5px;
     background-color: white;
-    color: #8f8f8f;
+    color: black;
     font-size: small;
 }
 
@@ -227,4 +244,15 @@
 .background-btn{
     padding: 5px;
     border-radius: 5px;
+}
+
+.background-btn-2{
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.image-size-close{
+    height: 15px;
+    width: 15px;
+    margin-left: 10px;
 }

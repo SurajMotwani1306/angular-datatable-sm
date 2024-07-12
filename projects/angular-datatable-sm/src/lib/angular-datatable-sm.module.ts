@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AngularDatatableSmComponent } from './angular-datatable-sm.component';
+import { EditRowComponent } from './components/edit-row/edit-row.component';
 
 import { AngularDropdownSelectModule } from 'angular-dropdown-select';
 import { AngularProgressBarSmModule } from 'angular-progress-bar-sm';
@@ -12,7 +13,8 @@ import { AngularFilterDropdownModule } from 'angular-filter-dropdown';
 
 @NgModule({
   declarations: [
-    AngularDatatableSmComponent
+    AngularDatatableSmComponent,
+    EditRowComponent
   ],
   imports: [
     BrowserModule,

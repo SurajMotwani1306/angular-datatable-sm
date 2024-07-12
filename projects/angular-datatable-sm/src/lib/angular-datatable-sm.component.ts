@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { ExportToCsvService } from './services/export-to-csv/export-to-csv.service';
+import { TableData } from "./models/user.interface";
 
 @Component({
   selector: 'lib-angular-datatable-sm',
@@ -8,7 +9,10 @@ import { ExportToCsvService } from './services/export-to-csv/export-to-csv.servi
 })
 export class AngularDatatableSmComponent {
   
-  @Input() data : any;
+  @Input() tableDataService : any;
+  @Input() pagination : boolean = false;
+  @Input() itemsPerPage : number = 0;
+  data : TableData;
   people: any;
   headings: any;
   highlightedRow: any = null;
@@ -17,9 +21,8 @@ export class AngularDatatableSmComponent {
   searchTerm: string = '';
   filteredPeople: any;
   currentPage: number = 1;
-  itemsPerPage: number =  5;
-  noOfPagesAvailable: number = 0;
-  parentValues: any;
+  noOfPagesAvailable: number = 1;
+  parentValues: any = {};
   dependentKeys: any;
   paginationSelectOption: Array<number> = [5,10,20,50,100];
   extras: any;
@@ -27,42 +30,88 @@ export class AngularDatatableSmComponent {
   replicaFilteredPeople: any;
   filterBoxArrowStatus: boolean = true;
   replicaOfHeading: any;
+  firstPageLoad: boolean = true;
+  resultantRow: any[] = [];
+  replicaHeadings: any;
 
   constructor(private exToCSV : ExportToCsvService){}
+  
+  ngOnInit(){   
+    this.loadTableData();
+  }
 
-  ngOnInit(){
+  updateWithLatestValues(){
     this.people = this.data.entries;
     this.headings = this.data.headers;
     this.extras = this.data.extras;
     this.parentValues = this.data.permissions;
     this.dependentKeys = this.data.dependentKeys;
-
     this.filterBoxArrowStatus = this.extras?.filterBoxArrowStatus;
 
-    this.filteredPeople = [...this.people];
+    this.filteredPeople = [...this.people];   
     this.filteredPeople.forEach((person:any) => person.showDetails = false);
     
-    if(this.parentValues.pagination === true){
-      this.updateFilteredData();
-    }
+    // if(this.parentValues.pagination === true){
+    //   this.updateFilteredData();
+    // }
 
-    //Get input of items per page from object shared
-    if(this.parentValues.pagination && this.dependentKeys.itemsPerPage){
-      let valueContains = this.paginationSelectOption.includes(this.dependentKeys.itemsPerPage);
+    //Get input of items per page from object shared in pagination dropdown
+    if(this.pagination === true && this.itemsPerPage){
+      let valueContains = this.paginationSelectOption.includes(parseInt(this.itemsPerPage.toString()));
+
       if(!valueContains){
-        this.paginationSelectOption.push(this.dependentKeys.itemsPerPage);
+        this.paginationSelectOption.push(this.itemsPerPage);
       }
-      this.itemsPerPage = this.dependentKeys.itemsPerPage;
+      // this.itemsPerPage = this.dependentKeys.itemsPerPage;
       this.paginationSelectOption.sort((a, b) => a - b);
-      this.updateFilteredData();
+      // this.updateFilteredData();
     }
 
     this.noOfPages();
 
     //Creating replica to utilize it when filtered one gets altered
     this.replicaFilteredPeople = this.filteredPeople;
+    this.replicaHeadings = this.headings;
 
     this.methodToDisplayTableColumnsBasedOnParentCheck();
+  }
+
+  loadTableData() {
+    this.tableDataService.getData(this.objectToPassDataService()).subscribe((response: any) => {
+      if(response && response.status === 200){
+        this.data = response?.data;
+        this.updateWithLatestValues();
+      }
+    }, (error: any) => {
+      // Handle errors
+      console.log(error);
+    });
+  }
+
+  objectToPassDataService(){
+    let lowerCaseSearchTerm = this.searchTerm;
+    let obj = {};
+
+    if(this.pagination === true && this.searchTerm !== ""){
+      obj = {
+        currentPage: this.currentPage,
+        itemsPerPage: this.itemsPerPage,
+        search: lowerCaseSearchTerm
+      }
+    }else if(this.pagination === false && this.searchTerm !== ""){
+      obj = {
+        search: lowerCaseSearchTerm
+      }
+    }else if(this.pagination === true && this.searchTerm === ""){
+      obj = {
+        currentPage: this.currentPage,
+        itemsPerPage: this.itemsPerPage
+      }
+    }else{
+      obj = {}
+    }
+
+    return obj;
   }
 
   methodToDisplayTableColumnsBasedOnParentCheck(){
@@ -99,28 +148,33 @@ export class AngularDatatableSmComponent {
   }
 
   search() {
-    if (!this.searchTerm) {
-      this.filteredPeople = [...this.people];
-    }else{
-      const lowerCaseSearchTerm = this.searchTerm.toLowerCase();
-      this.filteredPeople = this.people.filter((person:any) =>
-        person.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-        person.email.toLowerCase().includes(lowerCaseSearchTerm)
-      );
-    }
+    // this.filteredPeople = this.people.filter((person:any) =>
+    //   person.name.toLowerCase().includes(lowerCaseSearchTerm) ||
+    //   person.email.toLowerCase().includes(lowerCaseSearchTerm)
+    // );
 
+    this.tableDataService.getData(this.objectToPassDataService()).subscribe((response: any) => {
+      if(response && response.status === 200){
+        this.data = response?.data;
+        this.updateWithLatestValues();
+      }
+    }, (error: any) => {
+      // Handle errors
+      console.log(error);
+    });
     // this.updateFilteredData();
   }
 
-  updateFilteredData() {
-    let startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    let endIndex = startIndex + this.itemsPerPage;
-    this.filteredPeople = this.people.slice(startIndex, endIndex);
-  }
+  // updateFilteredData() {
+  //   let startIndex = (this.currentPage - 1) * this.itemsPerPage;
+  //   let endIndex = startIndex + this.itemsPerPage;
+  //   this.filteredPeople = this.people.slice(startIndex, endIndex);
+  // }
 
   onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;
-    this.updateFilteredData();
+    // this.updateFilteredData();
+    this.loadTableData();
   }
 
   exportToCsv() {
@@ -161,30 +215,57 @@ export class AngularDatatableSmComponent {
     });
   }
 
-  saveAccordion(index: number, updatedObj?:any) {
+  saveAccordion(index:number, rowData:any) {
     this.filteredPeople[index].showDetails = !this.filteredPeople[index].showDetails;
+    this.resultantRow.forEach(element => {
+      if(Object.hasOwn(rowData, element.name)){
+        rowData[element.name] = element.value;
+      }
+    });
+
+    let toUpdateIdData = rowData.id;
+    delete rowData.showDetails;
+    delete rowData.id;
+    delete rowData._id;
+
+    this.tableDataService.editData(toUpdateIdData,rowData).subscribe((response: any) => {
+      if(response && response.status === 200){
+        console.log(response.message);
+        this.loadTableData();
+      }
+    }, (error: any) => {
+      // Handle errors
+      console.log(error);
+    });
+  }
+
+  closeAccordion(index:number){
+    this.filteredPeople[index].showDetails = !this.filteredPeople[index].showDetails;
+    this.resultantRow = [];
   }
 
   updatedItemsPerPageCount(){
-    this.updateFilteredData();
+    // this.updateFilteredData();
+    this.currentPage = 1;
+    this.loadTableData();
     this.noOfPages();
   }
 
   noOfPages(){
-    this.noOfPagesAvailable = this.people.length / this.itemsPerPage;
-  }
+    // this.noOfPagesAvailable = this.people.length / this.itemsPerPage;
 
-  uppercaseMethod(h: string){
-    return h.toUpperCase().toString();
-  }
-
-  ceilNumber(num:number){
-    return Math.ceil(num);
+    if(this.dependentKeys?.totalNumberOfPages){
+      this.noOfPagesAvailable = this.dependentKeys?.totalNumberOfPages;
+    }
   }
 
   selectedColumnChange(event: any){
-    // required when passed to parent more
-    // console.log(event);
+    // required when passed to parent more   
+    this.headings.filter((obj: any, index: number) => {
+      if (obj['id'] === event['id']) {
+        this.headings[index].checked = event.checked;
+      }
+    });
   }
 
   getStatusOfUnselectedAll(event: any){
@@ -192,8 +273,17 @@ export class AngularDatatableSmComponent {
   }
 
   deleteRow(ID:number){
-    // API Call for deleting row & get filtered data - No need to handle at frontend
-    this.filteredPeople = this.filteredPeople.filter((obj: any) => obj.id !== ID);
+    // this.filteredPeople = this.filteredPeople.filter((obj: any) => obj.id !== ID);
+
+    this.tableDataService.deleteData(ID).subscribe((response: any) => {
+      if(response && response.status === 200){
+        console.log(response.message);
+        this.loadTableData();
+      }
+    }, (error: any) => {
+      // Handle errors
+      console.log(error);
+    });
   }
 
   selectedColumnChange2(event: any){
@@ -229,5 +319,25 @@ export class AngularDatatableSmComponent {
 
   updateFilterBoxArrowStatus(){
     this.filterBoxArrowStatus = !this.filterBoxArrowStatus;
+  }
+
+  updatedEditFieldValue(event: any){
+    let flag = false;
+    let key = -1;
+
+    this.resultantRow.forEach((element, i) => {     
+      if(element['index'] === event.index){
+        flag = true;
+        key = i;
+      }      
+    });
+
+    if(flag){
+      if(key >= 0){       
+        this.resultantRow[key].value = event.value;
+      }
+    }else{
+      this.resultantRow.push({index: event.index, name: event.name, value: event.value});
+    }
   }
 }
