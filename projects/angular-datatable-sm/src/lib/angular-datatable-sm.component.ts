@@ -51,10 +51,6 @@ export class AngularDatatableSmComponent {
     this.filteredPeople = [...this.people];   
     this.filteredPeople.forEach((person:any) => person.showDetails = false);
     
-    // if(this.parentValues.pagination === true){
-    //   this.updateFilteredData();
-    // }
-
     //Get input of items per page from object shared in pagination dropdown
     if(this.pagination === true && this.itemsPerPage){
       let valueContains = this.paginationSelectOption.includes(parseInt(this.itemsPerPage.toString()));
@@ -64,12 +60,11 @@ export class AngularDatatableSmComponent {
       }
       // this.itemsPerPage = this.dependentKeys.itemsPerPage;
       this.paginationSelectOption.sort((a, b) => a - b);
-      // this.updateFilteredData();
     }
 
     this.noOfPages();
 
-    //Creating replica to utilize it when filtered one gets altered
+    //Creating replica to utilize it when filtered & headings ones get altered
     this.replicaFilteredPeople = this.filteredPeople;
     this.replicaHeadings = this.headings;
 
@@ -143,16 +138,9 @@ export class AngularDatatableSmComponent {
         return this.isAscending ? firstValue - secondValue : secondValue - firstValue;
       }
     });
-
-    // this.updateFilteredData();
   }
 
   search() {
-    // this.filteredPeople = this.people.filter((person:any) =>
-    //   person.name.toLowerCase().includes(lowerCaseSearchTerm) ||
-    //   person.email.toLowerCase().includes(lowerCaseSearchTerm)
-    // );
-
     this.tableDataService.getData(this.objectToPassDataService()).subscribe((response: any) => {
       if(response && response.status === 200){
         this.data = response?.data;
@@ -162,18 +150,10 @@ export class AngularDatatableSmComponent {
       // Handle errors
       console.log(error);
     });
-    // this.updateFilteredData();
   }
-
-  // updateFilteredData() {
-  //   let startIndex = (this.currentPage - 1) * this.itemsPerPage;
-  //   let endIndex = startIndex + this.itemsPerPage;
-  //   this.filteredPeople = this.people.slice(startIndex, endIndex);
-  // }
 
   onPageChange(pageNumber: number) {
     this.currentPage = pageNumber;
-    // this.updateFilteredData();
     this.loadTableData();
   }
 
@@ -245,22 +225,18 @@ export class AngularDatatableSmComponent {
   }
 
   updatedItemsPerPageCount(){
-    // this.updateFilteredData();
     this.currentPage = 1;
     this.loadTableData();
     this.noOfPages();
   }
 
   noOfPages(){
-    // this.noOfPagesAvailable = this.people.length / this.itemsPerPage;
-
     if(this.dependentKeys?.totalNumberOfPages){
       this.noOfPagesAvailable = this.dependentKeys?.totalNumberOfPages;
     }
   }
 
   selectedColumnChange(event: any){
-    // required when passed to parent more   
     this.headings.filter((obj: any, index: number) => {
       if (obj['id'] === event['id']) {
         this.headings[index].checked = event.checked;
@@ -273,8 +249,6 @@ export class AngularDatatableSmComponent {
   }
 
   deleteRow(ID:number){
-    // this.filteredPeople = this.filteredPeople.filter((obj: any) => obj.id !== ID);
-
     this.tableDataService.deleteData(ID).subscribe((response: any) => {
       if(response && response.status === 200){
         console.log(response.message);
@@ -287,7 +261,6 @@ export class AngularDatatableSmComponent {
   }
 
   selectedColumnChange2(event: any){
-    // required when passed to parent more
     let keysName = Object.keys(event);
     
     if(event[keysName[1]] === true){
