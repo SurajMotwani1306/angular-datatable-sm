@@ -19,7 +19,7 @@ npm i angular-datatable-sm
 
 ## Usage
 
-## Import
+### Import
 ```ts
 import { AngularDatatableSmModule } from 'angular-datatable-sm';
 
@@ -103,6 +103,7 @@ let tableData = {
 
 ## Author
 You can contact me via. mail for any modiciations/updations for this package.
+<br/>
 Suraj Motwani - Email: suraj.motwani1306@gmail.com
 
 ## License
