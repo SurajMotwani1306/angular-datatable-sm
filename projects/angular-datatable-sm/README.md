@@ -20,6 +20,7 @@ npm i angular-datatable-sm
 ## Usage
 
 ## Import
+### Step 1:
 ```ts
 import { AngularDatatableSmModule } from 'angular-datatable-sm';
 
@@ -33,7 +34,19 @@ import { AngularDatatableSmModule } from 'angular-datatable-sm';
 })
 ```
 
+### Step 2:
+Create a service file - "table-data.service" - #Referrence_Path#
+& import it inside component where you want to use our "angular-datatable-sm" package:
+```ts
+import { TableDataService } from './services/tableData/table-data.service';
+
+constructor(public tableDataService: TableDataService) { }
+```
+
 ## Fundamental Usage
+### Step 3:
+Add in same component html file, where you have imported "TableDataService":
+
 ```html
 <lib-angular-datatable-sm
   [pagination]="true"
@@ -42,8 +55,18 @@ import { AngularDatatableSmModule } from 'angular-datatable-sm';
 </lib-angular-datatable-sm>
 ```
 
+## Fundamentals
+
+| Property/Method  |  Type   |  Default  | Description                                                                            |
+| ---------------- | :-----: | :-------: | -------------------------------------------------------------------------------------- |
+| pagination       | boolean |   false   | Parent flag to showcase pagination for data table                                      |
+| itemsPerPage     | number  |     10    | Mandatory field with "pagination" to show number of items per page                     |
+| tableDataService | service |     -     | Service file having api calling methods & return observale which can subscribe further |
+
+
 # Configuration - JSON/Object
 Values with dummy data is added below, to recieve as required response/structure:
+Service file methods must return below format as response, to pass.
 
 ```ts
 let tableData = {
@@ -93,13 +116,7 @@ let tableData = {
   };
 ```
 
-## Fundamentals
-
-| Property/Method  |  Type   |  Default  | Description                                                                            |
-| ---------------- | :-----: | :-------: | -------------------------------------------------------------------------------------- |
-| pagination       | boolean |   false   | Parent flag to showcase pagination for data table                                      |
-| itemsPerPage     | number  |     10    | Mandatory field with "pagination" to show number of items per page                     |
-| tableDataService | service |     -     | Service file having api calling methods & return observale which can subscribe further |
+or you can try it with json file importing in service file as well: #JSON_PATH
 
 ## Author
 You can contact me via. mail for any modiciations/updations for this package.
@@ -109,4 +126,3 @@ Suraj Motwani - Email: suraj.motwani1306@gmail.com
 ## License
 
 Dynamic Datatable SM is available under the MIT license. See the LICENSE file for more info.
-
