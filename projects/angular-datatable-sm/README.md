@@ -35,7 +35,7 @@ import { AngularDatatableSmModule } from 'angular-datatable-sm';
 ```
 
 ### Step 2:
-Create a service file - "table-data.service" - #Referrence_Path#
+Create a service file - <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/services/tableData/table-data.service.ts">table-data.service</a>
 & import it inside component where you want to use our "angular-datatable-sm" package:
 ```ts
 import { TableDataService } from './services/tableData/table-data.service';
@@ -116,7 +116,7 @@ let tableData = {
   };
 ```
 
-or you can try it with json file importing in service file as well: #JSON_PATH
+or you can try it with json file importing in service file as well: <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/assets/json/data.json">JSON Link</a>
 
 ## Author
 You can contact me via. mail for any modiciations/updations for this package.
@@ -126,3 +126,4 @@ Suraj Motwani - Email: suraj.motwani1306@gmail.com
 ## License
 
 Dynamic Datatable SM is available under the MIT license. See the LICENSE file for more info.
+
