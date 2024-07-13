@@ -41,13 +41,23 @@ import { AngularDatatableSmModule } from 'angular-datatable-sm';
 ```
 
 ### Step 2:
-Create a service file in your project & copy the template provided for your project - <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/services/tableData/table-data.service.ts">table-data.service</a><br/>
+Create a service file in your project & copy the template provided for your project - <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/services/tableData/table-data.service.ts">table-data.service</a>
+<br/> 
+
+```terminal
+ng generate service services/tableData/table-data
+```
+
+<br/>
 & import it inside component where you want to use our "angular-datatable-sm" package:
+
 ```ts
 import { TableDataService } from './services/tableData/table-data.service';
 
 constructor(public tableDataService: TableDataService) { }
 ```
+
+make sure "<b>public</b> tableDataService: TableDataService" must be public to pass to package.
 
 ## Fundamental Usage
 ### Step 3:
