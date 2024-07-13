@@ -9,6 +9,12 @@ Dynamic Datatable SM generation based on your requirement i.e. Table heading wit
         src="./projects/angular-datatable-sm/src/lib/assets/Screeenshot/data-table.gif" />
     </td>
    </tr>
+  <tr>
+    <td align="center">
+      <img alt="React Native Stylish List"
+        src="./projects/angular-datatable-sm/src/lib/assets/Screeenshot/data-table1.PNG" />
+    </td>
+   </tr>
 </table>
 
 ## Installation
