@@ -169,7 +169,7 @@ or you can try it with json file importing in your service file as well: <a href
 
 6. <b>dependentKeys.progressColumn:</b>
   <br/> Mention column/property - exact field from "entries", to enable progressbar to particular column/field. It should be numeric value.
-  <br/>Dependent Properties: <b>"dependentKeys.progressBarType"</b>(Optional) - "bar" or "circle" to represent in such form, by default - "bar".
+  <br/>Dependent Properties: <b>"dependentKeys.progressBarType"</b> - "bar" or "circle" to represent in such form.
 
 7. <b>dependentKeys.ratingsColumn:</b>
   <br/> Mention column/property - exact field from "entries", to enable ratings to particular column/field (Gained ratings). It should be numeric value.

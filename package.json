@@ -10,7 +10,7 @@
     "build-library": "ng build angular-datatable-sm",
     "pack-library": "cd dist/angular-datatable-sm && npm pack",
     "final": "ng build angular-datatable-sm && cd dist/angular-datatable-sm && npm pack",
-    "publish": "npm publish dist/angular-datatable-sm/angular-datatable-sm-1.4.0.tgz --access public"
+    "publish": "npm publish dist/angular-datatable-sm/angular-datatable-sm-1.4.1.tgz --access public"
   },
   "private": true,
   "dependencies": {
