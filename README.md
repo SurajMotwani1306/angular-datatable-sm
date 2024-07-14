@@ -156,7 +156,7 @@ or you can try it with json file importing in your service file as well: <a href
 
 3. <b>permissions.filterTableHeadersVisibility:</b>
   <br/> Show/Hide filter for header button.
-  <br/>Dependent Property 1: <b>"extras.dropdownButtonText"</b> - To update Dropdown Button text, otherwise default - "Table Columns"
+  <br/>Dependent Property 1: <b>"extras.dropdownButtonText"</b>(Optional) - To update Dropdown Button text, otherwise default - "Table Columns"
   <br/>Dependent Property 2: <b>"extras.uncheckAllStatus"</b> - To maintain uncheck All status in overall Table for headers dropdown.
 
 4. <b>permissions.filterBtnTableContentVisibility:</b>
@@ -165,11 +165,11 @@ or you can try it with json file importing in your service file as well: <a href
 
 5. <b>permissions.showcaseActionButtons:</b>
   <br/> Mention 'edit' to enable edit functionality & 'delete' to enable delete button in Array.
-  <br/>Dependent Properties: <b>"dependentKeys.editSaveActionButtonBgColor", "dependentKeys.deleteActionButtonBgColor" & "dependentKeys.closeActionButtonBgColor"</b> - To add background colors to button, by default transparent.
+  <br/>Dependent Properties: <b>"dependentKeys.editSaveActionButtonBgColor", "dependentKeys.deleteActionButtonBgColor" & "dependentKeys.closeActionButtonBgColor"</b>(optionals) - To add background colors to button, by default transparent.
 
 6. <b>dependentKeys.progressColumn:</b>
   <br/> Mention column/property - exact field from "entries", to enable progressbar to particular column/field. It should be numeric value.
-  <br/>Dependent Properties: <b>"dependentKeys.progressBarType"</b> - "bar" or "circle" to represent in such form.
+  <br/>Dependent Properties: <b>"dependentKeys.progressBarType"</b>(Optional) - "bar" or "circle" to represent in such form, by default - "bar".
 
 7. <b>dependentKeys.ratingsColumn:</b>
   <br/> Mention column/property - exact field from "entries", to enable ratings to particular column/field (Gained ratings). It should be numeric value.

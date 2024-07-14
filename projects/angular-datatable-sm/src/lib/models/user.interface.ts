@@ -14,17 +14,17 @@ export interface TableData {
     dependentKeys: {
       totalNumberOfPages: number,
       progressColumn: string,
-      progressBarType: string,
+      progressBarType?: string,
       ratingsColumn: string,
       filterColumn: string,
       maxRating: number,
-      editSaveActionButtonBgColor: string,
-      deleteActionButtonBgColor: string,
-      closeActionButtonBgColor: string
+      editSaveActionButtonBgColor?: string,
+      deleteActionButtonBgColor?: string,
+      closeActionButtonBgColor?: string
     },
     extras: {
       uncheckAllStatus: boolean,
-      dropdownButtonText: string,
+      dropdownButtonText?: string,
       filterBoxArrowStatus: boolean
     }
 }

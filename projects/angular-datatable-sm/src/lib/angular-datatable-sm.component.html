@@ -76,7 +76,7 @@
                                 <span *ngIf="dependentKeys.progressColumn !== h.name && dependentKeys.ratingsColumn !== h.name">{{ person[h.name] }}</span>
                                 <!-- Progress Bar -->
                                 <span *ngIf="dependentKeys.progressColumn === h.name">
-                                    <lib-angular-progress-bar-sm [progressValue]="person[h.name]" [progressColor]="'#000'" [progressBarType]="dependentKeys.progressBarType"/>
+                                    <lib-angular-progress-bar-sm [progressValue]="person[h.name]" [progressColor]="''" [progressBarType]="dependentKeys.progressBarType"/>
                                 </span>
                                 <!-- Ratings -->
                                 <span *ngIf="dependentKeys.ratingsColumn === h.name">
