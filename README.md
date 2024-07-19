@@ -43,6 +43,8 @@ import { AngularDatatableSmModule } from 'angular-datatable-sm';
 ### Step 2:
 Create a service file in your project & copy the template provided for your project - <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/services/tableData/table-data.service.ts">table-data.service</a>
 <br/> 
+or with mock JSON available below: <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/assets/service-to-showcase/table-data.service.ts">Service File with JSON</a>
+<br/>
 
 ```terminal
 ng generate service services/tableData/table-data
@@ -87,6 +89,7 @@ Service file methods must return below format as response, to pass & "angular-da
 
 ```ts
 let tableData = {
+  data: {
     headers: [
       { id: 1, name: 'id', checked: true },
       { id: 2, name: 'name', checked: true },
@@ -130,10 +133,21 @@ let tableData = {
       dropdownButtonText: 'Table Columns',
       filterBoxArrowStatus: true
     }
-  };
+  },
+  status: 200,
+  message: "Fetched Successfully!"
+};
 ```
 
-or you can try it with json file importing in your service file as well: <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/assets/json/data.json">JSON Link</a>
+or you can try it with json files importing in your service file as well: 
+<br/>
+<a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/assets/json/data.json">Load Table Data JSON Link</a>
+<br/>
+<a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/assets/json/editData.json">Edit Table Data JSON Link</a>
+<br/>
+<a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/assets/json/delete.json">Delete Table Data JSON Link</a>
+<br/>
+& modify your Table Data Service file in this way: <a href="https://github.com/SurajMotwani1306/angular-datatable-sm/blob/main/projects/angular-datatable-sm/src/lib/assets/service-to-showcase/table-data.service.ts">Delete Table Data JSON Link</a>
 
 ## Properties
 
