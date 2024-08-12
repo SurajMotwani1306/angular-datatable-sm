@@ -1,4 +1,4 @@
-# angular-datatable-sm
+# Angular Datatable SM
 Dynamic Datatable SM generation based on your requirement i.e. Table heading with number of columns & its table data.
 <br/>
 

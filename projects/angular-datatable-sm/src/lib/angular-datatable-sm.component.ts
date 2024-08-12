@@ -169,11 +169,11 @@ export class AngularDatatableSmComponent {
 
     if(person.showDetails){
       if(setClassValue){
-        setClassValue.classList.add("un-highlight-row");
+        setClassValue.classList.add("un-highlight-row-sm");
       }
 
       if(setClassValue2){
-        setClassValue2.classList.add("un-highlight-row-expanded");
+        setClassValue2.classList.add("un-highlight-row-expanded-sm");
       }
     }
   }
